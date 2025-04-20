@@ -1,13 +1,11 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html> 
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Математика тренажёр</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  
+  <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Добавлено -->
 </head>
 <body>
   <div class="container">
@@ -29,7 +27,7 @@
     </div>
 
     <div id="quiz" style="display: none;">
-	<p id="timer">Осталось времени: 10 сек.</p>
+      <p id="timer">Осталось времени: 10 сек.</p>
       <p id="question"></p>
       <input type="number" id="answer" placeholder="Твой ответ" onkeydown="handleKey(event)" inputmode="decimal" />
       <button onclick="submitAnswer()">Ответить</button>
@@ -37,45 +35,43 @@
     </div>
 
     <div id="result" style="display: none;">
-		<label>Фильтр по дате: <input type="date" id="filterDate" onchange="filterHistory()" /></label>
-		<div id="historyTable"></div>
+      <label>Фильтр по дате: <input type="date" id="filterDate" onchange="filterHistory()" /></label>
+      <div id="historyTable"></div>
 
       <h2>Результат</h2>
       <p id="finalScore"></p>
       <div id="review"></div>
-	  
-	  <button onclick="clearHistory()">Сбросить историю</button>
-	  
-	  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<canvas id="progressChart" width="400" height="200"></canvas>
 
+      <button onclick="clearHistory()">Сбросить историю</button>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <canvas id="progressChart" width="400" height="200"></canvas>
 
       <button onclick="restart()">Начать заново</button>
     </div>
   </div>
+
   <script src="script.js"></script>
+
+  <!-- 🔒 Проверка доступа по Telegram ID -->
   <script>
-  const tg = window.Telegram.WebApp;
-  tg.expand();
+    const tg = window.Telegram.WebApp;
+    tg.expand();
 
-  // Список разрешённых user.id
-  const allowedUserIds = [886699157, 1290894872, 1769921919]; // <-- замени на свои Telegram user.id
+    const allowedUserIds = [886699157,1290894872]; // 🛠️ Замените на ваши user.id
+    const user = tg.initDataUnsafe.user;
 
-  const user = tg.initDataUnsafe.user;
-
-  if (!user || !allowedUserIds.includes(user.id)) {
-    document.body.innerHTML = '
-      <div style="text-align:center;padding:40px;font-family:sans-serif">
-        <h2>🚫 Доступ запрещён</h2>
-        <p>Ваш Telegram ID: <b>${user ? user.id : 'неизвестен'}</b></p>
-        <p>Обратитесь к администратору.</p>
-      </div>
-    ';
-  }else {
-    // Всё ок — запускай основную логику
-    console.log("Добро пожаловать, " + user.username + " (ID: " + user.id + ")");
-  }
-</script>
-
+    if (!user || !allowedUserIds.includes(user.id)) {
+      document.body.innerHTML = '
+        <div style="text-align:center;padding:40px;font-family:sans-serif">
+          <h2>🚫 Доступ запрещён</h2>
+          <p>Ваш Telegram ID: <b>${user ? user.id : 'неизвестен'}</b></p>
+          <p>Обратитесь к администратору.</p>
+        </div>
+      ';
+    } else {
+      console.log("Добро пожаловать, " + user.username + " (ID: " + user.id + ")");
+    }
+  </script>
 </body>
 </html>
