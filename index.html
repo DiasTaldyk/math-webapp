@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Математика тренажёр</title>
+  <link rel="stylesheet" href="style.css" />
+  
+</head>
+<body>
+  <div class="container">
+    <h1>Тренажёр по математике</h1>
+
+    <div id="setup">
+      <label>Операция:
+        <select id="operation">
+          <option value="+">Сложение</option>
+          <option value="-">Вычитание</option>
+          <option value="*">Умножение</option>
+          <option value="/">Деление</option>
+        </select>
+      </label>
+      <label>Количество задач:
+        <input type="number" id="numQuestions" value="5" min="1" max="100" />
+      </label>
+      <button onclick="startQuiz()">Начать</button>
+    </div>
+
+    <div id="quiz" style="display: none;">
+	<p id="timer">Осталось времени: 10 сек.</p>
+      <p id="question"></p>
+      <input type="number" id="answer" placeholder="Твой ответ" onkeydown="handleKey(event)" inputmode="decimal" />
+      <button onclick="submitAnswer()">Ответить</button>
+      <p id="score-box">Правильных: <span id="score">0</span></p>
+    </div>
+
+    <div id="result" style="display: none;">
+		<label>Фильтр по дате: <input type="date" id="filterDate" onchange="filterHistory()" /></label>
+		<div id="historyTable"></div>
+
+      <h2>Результат</h2>
+      <p id="finalScore"></p>
+      <div id="review"></div>
+	  
+	  <button onclick="clearHistory()">Сбросить историю</button>
+	  
+	  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<canvas id="progressChart" width="400" height="200"></canvas>
+
+
+      <button onclick="restart()">Начать заново</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
