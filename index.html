@@ -64,14 +64,14 @@
   const user = tg.initDataUnsafe.user;
 
   if (!user || !allowedUserIds.includes(user.id)) {
-    document.body.innerHTML = `
+    document.body.innerHTML = '
       <div style="text-align:center;padding:40px;font-family:sans-serif">
         <h2>🚫 Доступ запрещён</h2>
         <p>Ваш Telegram ID: <b>${user ? user.id : 'неизвестен'}</b></p>
         <p>Обратитесь к администратору.</p>
       </div>
-    `;
-  } else {
+    ';
+  }else {
     // Всё ок — запускай основную логику
     console.log("Добро пожаловать, " + user.username + " (ID: " + user.id + ")");
   }
