@@ -55,23 +55,40 @@
 
   <!-- 🔒 Проверка доступа по Telegram ID -->
   <script>
+  window.addEventListener('DOMContentLoaded', () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const allowedUserIds = [1290894872]; // 🛠️ Замените на ваши user.id
-    const user = tg.initDataUnsafe.user;
+    const allowedUserIds = [123456789, 987654321]; // 🔁 ЗАМЕНИ СЮДА свои user.id
+    const user = tg.initDataUnsafe && tg.initDataUnsafe.user;
 
-    if (!user || !allowedUserIds.includes(user.id)) {
-      document.body.innerHTML = '
+    if (!user) {
+      // Пользователь не открыл через Telegram WebApp
+      document.body.innerHTML = `
+        <div style="text-align:center;padding:40px;font-family:sans-serif">
+          <h2>🚫 Откройте через Telegram</h2>
+          <p>Пожалуйста, запустите это приложение через Telegram-бота.</p>
+        </div>
+      `;
+      return;
+    }
+
+    if (!allowedUserIds.includes(user.id)) {
+      // Пользователь не в списке разрешённых
+      document.body.innerHTML = `
         <div style="text-align:center;padding:40px;font-family:sans-serif">
           <h2>🚫 Доступ запрещён</h2>
-          <p>Ваш Telegram ID: <b>${user ? user.id : 'неизвестен'}</b></p>
+          <p>Ваш Telegram ID: <b>${user.id}</b></p>
           <p>Обратитесь к администратору.</p>
         </div>
-      ';
-    } else {
-      console.log("Добро пожаловать, " + user.username + " (ID: " + user.id + ")");
+      `;
+      return;
     }
-  </script>
+
+    // Если пользователь разрешён — можно продолжать
+    console.log("✅ Доступ разрешён для: " + user.username + " (ID: " + user.id + ")");
+  });
+</script>
+
 </body>
 </html>
