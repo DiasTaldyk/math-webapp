@@ -8,6 +8,19 @@ let timeLeft = timePerQuestion;
 function startQuiz() {
   const operation = document.getElementById("operation").value;
   const num = parseInt(document.getElementById("numQuestions").value);
+  const min = parseInt(document.getElementById("minValue").value);
+  const max = parseInt(document.getElementById("maxValue").value);
+
+  if (isNaN(min) || isNaN(max)) {
+    alert("Пожалуйста, укажи корректный диапазон чисел.");
+    return;
+  }
+
+  if (min > max) {
+    alert("Минимальное значение не может быть больше максимального.");
+    return;
+  }
+  
 
   questions = generateQuestions(num, operation);
   current = 0;
