@@ -182,6 +182,8 @@ function finishQuiz() {
   showHistory();
   
   renderChart();
+  showCongratulations(score, totalQuestions);
+
 
 }
 
@@ -214,4 +216,19 @@ function restart() {
   document.getElementById("setup").style.display = "block";
   document.getElementById("quiz").style.display = "none";
   document.getElementById("result").style.display = "none";
+}
+
+function showCongratulations(score, total) {
+  const percent = (score / total) * 100;
+  if (percent >= 80) {
+    const congrats = document.createElement("div");
+    congrats.innerHTML = `
+      <div style="background-color: #d1e7dd; padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center;">
+        <h2 style="color: #0f5132;">🎉 Поздравляем! 🎉</h2>
+        <p>Ты набрал <strong>${score}</strong> из <strong>${total}</strong> — отличный результат!</p>
+        <p>Так держать!</p>
+      </div>
+    `;
+    document.getElementById("result").prepend(congrats);
+  }
 }
