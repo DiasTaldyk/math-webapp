@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Математика тренажёр</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   
 </head>
 <body>
@@ -52,5 +54,28 @@
     </div>
   </div>
   <script src="script.js"></script>
+  <script>
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+
+  // Список разрешённых user.id
+  const allowedUserIds = [123456789, 987654321]; // <-- замени на свои Telegram user.id
+
+  const user = tg.initDataUnsafe.user;
+
+  if (!user || !allowedUserIds.includes(user.id)) {
+    document.body.innerHTML = `
+      <div style="text-align:center;padding:40px;font-family:sans-serif">
+        <h2>🚫 Доступ запрещён</h2>
+        <p>Ваш Telegram ID: <b>${user ? user.id : 'неизвестен'}</b></p>
+        <p>Обратитесь к администратору.</p>
+      </div>
+    `;
+  } else {
+    // Всё ок — запускай основную логику
+    console.log("Добро пожаловать, " + user.username + " (ID: " + user.id + ")");
+  }
+</script>
+
 </body>
 </html>
