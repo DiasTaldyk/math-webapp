@@ -22,9 +22,12 @@ function startQuiz() {
 
 function generateQuestions(count, op) {
   const q = [];
+  const min = parseInt(document.getElementById("minValue").value);
+  const max = parseInt(document.getElementById("maxValue").value);
+  
   for (let i = 0; i < count; i++) {
-    let a = Math.floor(Math.random() * 50) + 1;
-    let b = Math.floor(Math.random() * 50) + 1;
+    let a = Math.floor(Math.random() * (max - min + 1)) + min;
+    let b = Math.floor(Math.random() * (max - min + 1)) + min;
     if (op === "/") {
       a = a * b;
     }
