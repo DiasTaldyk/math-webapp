@@ -182,7 +182,8 @@ function finishQuiz() {
   showHistory();
   
   renderChart();
-  showCongratulations(score, totalQuestions);
+  showCongratulations(score, questions.length);
+  
 
 
 }
