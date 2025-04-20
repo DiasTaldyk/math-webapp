@@ -58,7 +58,7 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const allowedUserIds = [886699157,1290894872]; // 🛠️ Замените на ваши user.id
+    const allowedUserIds = [1290894872]; // 🛠️ Замените на ваши user.id
     const user = tg.initDataUnsafe.user;
 
     if (!user || !allowedUserIds.includes(user.id)) {
