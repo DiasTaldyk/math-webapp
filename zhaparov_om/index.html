@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Математика жаттықтырғышы</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Ж.Жапаров атындағы ОММДШО</h1>
+    <h1>Бастауыш математикасы</h1>
 
+    <div id="setup">
+      <label>Амал:
+        <select id="operation">
+          <option value="+">Қосу</option>
+          <option value="-">Азайту</option>
+          <option value="*">Көбейту</option>
+          <option value="/">Бөлу</option>
+        </select>
+      </label>
+      <label>Тапсырма саны:
+        <input type="number" id="numQuestions" value="5" min="1" max="100" />
+      </label>
+      <label>Сандар ауқымы:
+        бастап <input type="number" id="minValue" value="1" />
+        дейін <input type="number" id="maxValue" value="10" />
+      </label>
+
+      <button onclick="startQuiz()">Бастау</button>
+    </div>
+
+    <div id="quiz" style="display: none;">
+      <p id="timer">Қалған уақыт: 10 сек.</p>
+      <p id="question"></p>
+      <input type="number" id="answer" placeholder="Жауабыңды жаз" onkeydown="handleKey(event)" inputmode="decimal" />
+      <button onclick="submitAnswer()">Жауап беру</button>
+      <p id="score-box">Дұрыс жауаптар: <span id="score">0</span></p>
+    </div>
+
+    <div id="result" style="display: none;">
+      <label>Күн бойынша сүзгі: <input type="date" id="filterDate" onchange="filterHistory()" /></label>
+      <div id="historyTable"></div>
+
+      <h2>Нәтиже</h2>
+      <p id="finalScore"></p>
+      <div id="review"></div>
+
+      <button onclick="clearHistory()">Тарихты тазарту</button>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <canvas id="progressChart" width="400" height="200"></canvas>
+
+      <button onclick="restart()">Қайта бастау</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- ✅ Telegram бар болса ғана қолданамыз (тексерусіз) -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const tg = window.Telegram?.WebApp;
+      tg?.expand();
+
+      console.log("Қосымша іске қосылды (шектеу жоқ)");
+    });
+  </script>
+
+</body>
+</html>
