@@ -1,4 +1,4 @@
-﻿let questions = [];
+let questions = [];
 let current = 0;
 let score = 0;
 let timer = null;
@@ -12,15 +12,14 @@ function startQuiz() {
   const max = parseInt(document.getElementById("maxValue").value);
 
   if (isNaN(min) || isNaN(max)) {
-    alert("Пожалуйста, укажи корректный диапазон чисел.");
+    alert("Өтінемін, сандар ауқымын дұрыс көрсетіңіз.");
     return;
   }
 
   if (min > max) {
-    alert("Минимальное значение не может быть больше максимального.");
+    alert("Ең кіші мән ең үлкен мәннен артық болмауы керек.");
     return;
   }
-  
 
   questions = generateQuestions(num, operation);
   current = 0;
@@ -37,7 +36,7 @@ function generateQuestions(count, op) {
   const q = [];
   const min = parseInt(document.getElementById("minValue").value);
   const max = parseInt(document.getElementById("maxValue").value);
-  
+
   for (let i = 0; i < count; i++) {
     let a = Math.floor(Math.random() * (max - min + 1)) + min;
     let b = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -83,7 +82,7 @@ function startTimer() {
     timeLeft--;
     updateTimerDisplay();
     if (timeLeft <= 0) {
-      submitAnswer(); // автоматически
+      submitAnswer(); // автоматты түрде
     }
   }, 1000);
 }
@@ -93,9 +92,8 @@ function stopTimer() {
 }
 
 function updateTimerDisplay() {
-  document.getElementById("timer").innerText = `Осталось времени: ${timeLeft} сек.`;
+  document.getElementById("timer").innerText = `Қалған уақыт: ${timeLeft} сек.`;
 }
-
 
 function handleKey(e) {
   if (e.key === "Enter") {
@@ -104,13 +102,12 @@ function handleKey(e) {
 }
 
 function clearHistory() {
-  if (confirm("Ты точно хочешь удалить всю историю?")) {
+  if (confirm("Барлық тарихты өшіргіңіз келе ме?")) {
     localStorage.removeItem("history");
-    alert("История очищена!");
+    alert("Тарих тазартылды!");
     location.reload();
   }
 }
-
 
 function showHistory() {
   const history = JSON.parse(localStorage.getItem("history") || "[]");
@@ -119,13 +116,13 @@ function showHistory() {
 
 function renderHistoryTable(data) {
   const table = document.getElementById("historyTable");
-  table.innerHTML = "<h3>История:</h3>";
+  table.innerHTML = "<h3>Тарих:</h3>";
   if (data.length === 0) {
-    table.innerHTML += "<p>История пуста</p>";
+    table.innerHTML += "<p>Тарих бос</p>";
     return;
   }
 
-  let html = "<table border='1' style='border-collapse: collapse;'><tr><th>Дата</th><th>Операция</th><th>Результат</th></tr>";
+  let html = "<table border='1' style='border-collapse: collapse;'><tr><th>Күні</th><th>Амал</th><th>Нәтиже</th></tr>";
   data.reverse().forEach(h => {
     html += `<tr><td>${h.date}</td><td>${h.operation}</td><td>${h.correct}/${h.total}</td></tr>`;
   });
@@ -140,8 +137,6 @@ function filterHistory() {
   renderHistoryTable(filtered);
 }
 
-
-
 function renderChart() {
   const history = JSON.parse(localStorage.getItem("history") || "[]");
 
@@ -154,7 +149,7 @@ function renderChart() {
     data: {
       labels,
       datasets: [{
-        label: 'Процент правильных (%)',
+        label: 'Дұрыс жауаптар пайызы (%)',
         data: scores,
         fill: false,
         borderColor: 'green',
@@ -173,35 +168,27 @@ function renderChart() {
   });
 }
 
-
-
-
-
-
 function finishQuiz() {
   stopTimer();
   document.getElementById("quiz").style.display = "none";
   document.getElementById("result").style.display = "block";
-  document.getElementById("finalScore").innerText = `Ты решил правильно ${score} из ${questions.length} задач.`;
+  document.getElementById("finalScore").innerText = `Сіз ${questions.length} тапсырманың ${score} дұрыс шештіңіз.`;
 
   const review = document.getElementById("review");
   review.innerHTML = "";
   questions.forEach((q, i) => {
     const p = document.createElement("p");
     const isCorrect = Math.abs(q.user - q.correct) < 0.001;
-    p.innerHTML = `${i + 1}) ${q.a} ${q.op} ${q.b} = ${q.correct}. Твой ответ: ${q.user}`;
+    p.innerHTML = `${i + 1}) ${q.a} ${q.op} ${q.b} = ${q.correct}. Сіздің жауабыңыз: ${q.user}`;
     p.className = isCorrect ? "correct" : "incorrect";
     review.appendChild(p);
   });
 
   saveToHistory(score, questions.length, questions[0].op);
   showHistory();
-  
+
   renderChart();
   showCongratulations(score, questions.length);
-  
-
-
 }
 
 function saveToHistory(correct, total, op) {
@@ -218,7 +205,7 @@ function saveToHistory(correct, total, op) {
 function showHistory() {
   const history = JSON.parse(localStorage.getItem("history") || "[]");
   const historyDiv = document.createElement("div");
-  historyDiv.innerHTML = "<h3>Предыдущие попытки:</h3>";
+  historyDiv.innerHTML = "<h3>Алдыңғы әрекеттер:</h3>";
 
   history.slice(-5).reverse().forEach(h => {
     const p = document.createElement("p");
@@ -241,9 +228,9 @@ function showCongratulations(score, total) {
     const congrats = document.createElement("div");
     congrats.innerHTML = `
       <div style="background-color: #d1e7dd; padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center;">
-        <h2 style="color: #0f5132;">🎉 Поздравляем! 🎉</h2>
-        <p>Ты набрал <strong>${score}</strong> из <strong>${total}</strong> — отличный результат!</p>
-        <p>Так держать!</p>
+        <h2 style="color: #0f5132;">🎉 Құттықтаймыз! 🎉</h2>
+        <p>Сіз <strong>${total}</strong> тапсырманың <strong>${score}</strong> дұрыс орындадыңыз — тамаша нәтиже!</p>
+        <p>Осылай жалғастырыңыз!</p>
       </div>
     `;
     document.getElementById("result").prepend(congrats);
