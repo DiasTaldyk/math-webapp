@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Үлкен экран</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #222; color: white; }
+        #scoreDisplay { font-size: 30vw; font-weight: bold; line-height: 1; }
+        #status { position: fixed; bottom: 20px; font-size: 18px; color: #888; }
+    </style>
+</head>
+<body>
+    <div id="scoreDisplay">—</div>
+    <div id="status">Байланыс күтілуде...</div>
+
+    <script type="module">
+        import webconnect from 'https://cdn.jsdelivr.net/npm/webconnect/dist/esm/webconnect.js';
+
+        const connect = webconnect();
+        const scoreEl = document.getElementById('scoreDisplay');
+        const statusEl = document.getElementById('status');
+
+        // Деректерді қабылдау
+        connect.onReceive((data, attribute) => {
+            console.log('Қабылданды:', data, attribute);
+            if (data && data.score !== undefined) {
+                scoreEl.textContent = data.score;
+            }
+        });
+
+        connect.onConnect((attr) => {
+            statusEl.textContent = `Жюри қосылды: ${attr.connectId}`;
+        });
+        connect.onDisconnect(() => {
+            statusEl.textContent = 'Жюри ажыратылды';
+        });
+    </script>
+</body>
+</html>

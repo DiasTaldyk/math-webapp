@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жюри панелі</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; }
+        .buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; max-width: 500px; margin: 20px auto; }
+        button { padding: 20px; font-size: 24px; cursor: pointer; border: 2px solid #333; border-radius: 10px; background: #f0f0f0; }
+        button:active { background: #ccc; }
+        #status { margin-bottom: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Жюри пульті</h1>
+    <div id="status">Байланыс күтілуде...</div>
+    <div class="buttons" id="scoreButtons"></div>
 
+    <script type="module">
+        import webconnect from 'https://cdn.jsdelivr.net/npm/webconnect@0.0.3/dist/esm/webconnect.js';
+
+        const connect = webconnect({});
+        const statusEl = document.getElementById('status');
+        const buttonsEl = document.getElementById('scoreButtons');
+
+        // 1-10 сандарын жасау
+        for (let i = 1; i <= 10; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            btn.onclick = () => {
+                // Маңызды: екінші параметрге { connectId: null } беру керек
+                // null = арнадағы барлық қосылымдарға жіберу
+                connect.Send({ score: i }, { connectId: null });
+                statusEl.textContent = `Жіберілді: ${i} ұпай`;
+            };
+            buttonsEl.appendChild(btn);
+        }
+
+        // Қосылым күйін көрсету
+        connect.onConnect((attribute) => {
+            statusEl.textContent = `Қосылды: ${attribute.connectId}`;
+        });
+        connect.onDisconnect(() => {
+            statusEl.textContent = 'Ажыратылды';
+        });
+    </script>
+</body>
+</html>
